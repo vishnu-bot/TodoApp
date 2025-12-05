@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct SearchView: View {
+    @StateObject private var searchVM = SearchViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ListView(item: searchVM.filteredTasks)
+                .searchable(text: $searchVM.searchText, prompt: "Search tasks")
+                .navigationTitle("Search")
+        }
     }
 }
 
