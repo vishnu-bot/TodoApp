@@ -1,18 +1,18 @@
 //
-//  HomeView.swift
+//  SearchView.swift
 //  TodoApp
 //
-//  Created by Vishnu on 04/12/25.
+//  Created by Vishnu on 05/12/25.
 //
 
 import SwiftUI
 
-struct HomeView: View {
+struct SearchView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    HomeView()
+    SearchView()
 }
