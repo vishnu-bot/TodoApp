@@ -18,7 +18,7 @@ struct ContentView: View {
                 AllTaskView()
             }
             Tab(Constants.searchString, systemImage: Constants.searchIcon){
-                Text("Search")
+                SearchView()
             }
             Tab(Constants.dashboardString, systemImage: Constants.dashboardIcon){
                 Text("Dashboard")

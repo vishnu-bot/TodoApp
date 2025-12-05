@@ -18,12 +18,12 @@ struct ListView: View {
                         .foregroundColor(entity.isCompleted ? .red.opacity(0.93) : .gray)
                         .onTapGesture {
                             entity.isCompleted.toggle()
-                            viewModel.fetchData()
+                            viewModel.saveData()
                         }
                     
                     Text(entity.title ?? "No Title")
                     
-                    NavigationLink(destination: Text(entity.title ?? "No Title")) { }
+                    NavigationLink(destination: TaskDetailView(entity: entity)) { }
                 }
                 
             }

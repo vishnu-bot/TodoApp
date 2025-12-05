@@ -6,16 +6,39 @@
 //
 
 import Foundation
+import SwiftUI
+
 
 struct Constants {
+
     
-    static let todayTaskString = "Today"
     static let allTaskString = "All Tasks"
     static let searchString = "Search"
     static let dashboardString = "Dashboard"
+    static let todaysTaskString = "Today"
     
-    static let todayTaskIcon = "calendar"
-    static let allTaskIcon = "list"
+    static let addTaskString = "Add Task"
+    
+    
+    static let date = Calendar.current.component(.day, from: Date())
+    static let todayTaskIcon = "\(date).calendar"
+    static let allTaskIcon = "checklist"
     static let searchIcon = "magnifyingglass"
-    static let dashboardIcon = "house"
+    static let dashboardIcon = "gauge.chart.leftthird.topthird.rightthird"
+    
+    static let addButtonIcon = "plus"
+}
+
+
+extension Button {
+    func addButtonStyle() -> some View {
+        self
+            .foregroundStyle(.white)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(.red.opacity(0.93)))
+                            )
+    }
 }
