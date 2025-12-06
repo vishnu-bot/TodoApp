@@ -43,7 +43,7 @@ class CoreDataViewModel: ObservableObject {
     }
     
     // function to add the data to the CORE DATA
-    func addTaskData(title: String, notes: String?, dueDate: Date, isCompleted: Bool, priority: Int16){
+    func addTaskData(title: String, notes: String?, dueDate: Date, isCompleted: Bool, priority: Int16,category: String){
         let newTask = TaskEntity(context: container.viewContext)
         newTask.id = UUID()
         newTask.title = title
@@ -53,22 +53,30 @@ class CoreDataViewModel: ObservableObject {
         newTask.dueDate = dueDate
         newTask.priorityRaw = priority
         newTask.isCompleted = isCompleted
+        newTask.category = category
         saveData()
     }
     
-    func updateTaskData(title: String, notes: String?, dueDate: Date, isCompleted: Bool, priority: Int16, entity: TaskEntity){
-        entity.title = title ?? entity.title
+    func updateTaskData(title: String, notes: String?, dueDate: Date, isCompleted: Bool, priority: Int16, category: String,entity: TaskEntity){
+        entity.title = title
         entity.notes = notes ?? entity.notes
         entity.updatedAt = Date.now
         entity.dueDate = dueDate
         entity.priorityRaw = priority
         entity.isCompleted = isCompleted
+        entity.category = category
         saveData()
         
         
     }
     
-    // function to delete from DB
+    // function to delete specific entity
+    func deleteTask(entity: TaskEntity) {
+        container.viewContext.delete(entity)
+        saveData()
+    }
+    
+    // function to delete from DB (Deprecated: Use deleteTask instead)
     func deleteData(indexSet: IndexSet){
         guard let index = indexSet.first else {return}
         let entity = savedEntities[index]

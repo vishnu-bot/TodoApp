@@ -21,7 +21,7 @@ struct ContentView: View {
                 SearchView()
             }
             Tab(Constants.dashboardString, systemImage: Constants.dashboardIcon){
-                Text("Dashboard")
+                DashboardView()
             }
         }
         .tint(Color(.red))

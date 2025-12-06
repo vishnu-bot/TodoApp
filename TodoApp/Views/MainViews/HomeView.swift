@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State private var isPresentingNewTask = false
     @EnvironmentObject var viewModel: CoreDataViewModel
+    
     var body: some View {
         NavigationStack{
             ZStack(alignment: .bottomTrailing) {

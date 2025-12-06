@@ -41,4 +41,13 @@ extension Button {
                     .fill(Color(.red.opacity(0.93)))
                             )
     }
+    
+    func saveButtonStyle() -> some View {
+        self
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.red.opacity(0.83))
+            .foregroundColor(.white)
+            .cornerRadius(10)
+    }
 }

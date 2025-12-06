@@ -27,8 +27,13 @@ struct ListView: View {
                 }
                 
             }
-            .onDelete(perform: viewModel.deleteData)
-            .listStyle(.sidebar)
+            .onDelete { indexSet in
+                for index in indexSet {
+                    let entity = item[index]
+                    viewModel.deleteTask(entity: entity)
+                }
+            }
+            .listStyle(.plain)
             
         }
         

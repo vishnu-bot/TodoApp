@@ -10,10 +10,14 @@ import SwiftUI
 struct AllTaskView: View {
     @State private var isPresentingNewTask = false
     @EnvironmentObject private var viewModel: CoreDataViewModel
+    @StateObject private var sortVM = SortViewModel()
+    
     var body: some View {
         NavigationStack{
             ZStack(alignment: .bottomTrailing) {
-                ListView(item: viewModel.savedEntities)
+                ListView(item: sortVM.sortTasks(viewModel.savedEntities))
+                
+                
                 Button{
                     isPresentingNewTask = true
                 } label:{
@@ -30,9 +34,18 @@ struct AllTaskView: View {
             .sheet(isPresented: $isPresentingNewTask) {
                 NewTaskView()
             }
-            .navigationTitle(Constants.allTaskString)
+            .navigationTitle(sortVM.selectedSortOption == .dueDate ? "Sorted by Due Date" : Constants.allTaskString)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        sortVM.toggleSort()
+                    } label: {
+                        Label("Sort", systemImage: sortVM.selectedSortOption == .dueDate ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
+                    }
+                }
+            }
+            
         }
-        
     }
 
 }

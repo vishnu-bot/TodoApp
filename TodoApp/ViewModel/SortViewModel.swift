@@ -6,13 +6,32 @@
 //
 
 import SwiftUI
+import Foundation
+import Combine
 
-struct SortViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class SortViewModel: ObservableObject {
+    
+    enum SortOption: String, CaseIterable {
+        case defaultOrder = "Default"
+        case dueDate = "DueDate"
     }
-}
-
-#Preview {
-    SortViewModel()
+    
+    @Published var selectedSortOption: SortOption = .defaultOrder
+    
+    func sortTasks(_ tasks: [TaskEntity]) -> [TaskEntity] {
+        switch selectedSortOption {
+        case .defaultOrder:
+            return tasks
+        case .dueDate:
+            return tasks.sorted { $0.dueDate ?? Date.now < $1.dueDate ?? Date.now}
+        }
+    }
+    
+    func toggleSort() {
+        if selectedSortOption == .defaultOrder {
+            selectedSortOption = .dueDate
+        } else {
+            selectedSortOption = .defaultOrder
+        }
+    }
 }

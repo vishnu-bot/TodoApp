@@ -16,6 +16,8 @@ struct NewTaskView: View {
     @State private var dueDate: Date = Calendar.current.startOfDay(for: Date())
     @State private var priorities: [Int] = [1, 2, 3]
     @State private var selectedPriority: Int = 3
+    @State private var categories: [String] = [ "Work", "Personal","Others" ]
+    @State private var selectedCategory: String = "Others"
     
     var body: some View {
         NavigationStack{
@@ -23,7 +25,7 @@ struct NewTaskView: View {
                 LazyVStack(spacing:35){
                     VStack(alignment: .leading){
                         Text("Task")
-                            .font(.subheadline)
+                            .bold()
                         TextField("New Task", text: $newTask)
                             .padding()
                             .cornerRadius(8)
@@ -32,21 +34,24 @@ struct NewTaskView: View {
                     
                     VStack(alignment: .leading){
                         Text("Decription")
-                            .font(.subheadline)
+                            .bold()
                         TextEditor(text: $description)
                             .frame(minHeight: 120)
                             .padding(8)
                             .background(Color(.secondarySystemBackground))
                             .cornerRadius(8)
+                            .scrollDisabled(false)
                     }
                     
                     
                     DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
+                        .bold()
                         
                     
                     HStack{
                         
-                        Text("Choose Task Priority")
+                        Text("Task Priority")
+                            .bold()
                         Spacer()
                         Picker("Priority", selection: $selectedPriority) {
                             ForEach(priorities, id: \.self) { priority in
@@ -56,9 +61,25 @@ struct NewTaskView: View {
                         .pickerStyle(.menu)
                     }
                     
+                    
+                    VStack(alignment: .leading){
+                        Text("Task Category")
+                            .bold()
+                            .padding(.horizontal,2.5)
+                        HStack{
+                            Picker("Category", selection: $selectedCategory) {
+                                ForEach(categories, id: \.self) { category in
+                                    Text("\(category)").tag(category)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                        }
+                    }
+                    
+                    
                     Button{
                         guard !newTask.isEmpty else { return }
-                        viewModel.addTaskData(title: newTask, notes: description, dueDate: dueDate, isCompleted: false, priority: Int16(selectedPriority))
+                        viewModel.addTaskData(title: newTask, notes: description, dueDate: dueDate, isCompleted: false, priority: Int16(selectedPriority),category: selectedCategory)
 //                        viewModel.saveData()
                         newTask = ""
                         description = ""
@@ -68,6 +89,7 @@ struct NewTaskView: View {
                         
                         
                     }
+                    .saveButtonStyle()
                     
                     
                     

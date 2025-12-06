@@ -18,6 +18,8 @@ struct TaskDetailView: View {
     @State private var priorities: [Int] = [1, 2, 3]
     @State private var selectedPriority: Int = 3
     @State private var isCompleted: Bool = false
+    @State private var categories: [String] = [ "Work", "Personal","Others"]
+    @State private var selectedCategory: String = "Others"
     
     var body: some View {
         NavigationStack{
@@ -52,7 +54,7 @@ struct TaskDetailView: View {
                     
                     HStack{
                         
-                        Text("Choose Task Priority")
+                        Text("Task Priority")
                         Spacer()
                         Picker("Priority", selection: $selectedPriority) {
                             ForEach(priorities, id: \.self) { priority in
@@ -62,10 +64,23 @@ struct TaskDetailView: View {
                         .pickerStyle(.menu)
                     }
                     
+                    VStack(alignment: .leading){
+                        Text("Task Category")
+                            .padding(.horizontal,2.5)
+                        HStack{
+                            Picker("Category", selection: $selectedCategory) {
+                                ForEach(categories, id: \.self) { category in
+                                    Text("\(category)").tag(category)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                        }
+                    }
+                    
                     Button{
                         guard !title.isEmpty else { return }
                         if let entity = entity {
-                            viewModel.updateTaskData(title: title, notes: description, dueDate: dueDate, isCompleted: isCompleted, priority: Int16(selectedPriority), entity: entity)
+                            viewModel.updateTaskData(title: title, notes: description, dueDate: dueDate, isCompleted: isCompleted, priority: Int16(selectedPriority),category: selectedCategory ,entity: entity)
                         }
 //                        else {
 //                            viewModel.addTaskData(title: title, notes: description, dueDate: dueDate, isCompleted: false, priority: Int16(selectedPriority))
@@ -77,6 +92,7 @@ struct TaskDetailView: View {
                         
                         
                     }
+                    .saveButtonStyle()
                     
                     
                     
@@ -92,6 +108,7 @@ struct TaskDetailView: View {
                 dueDate = entity.dueDate ?? Date()
                 selectedPriority = Int(entity.priorityRaw)
                 isCompleted = entity.isCompleted
+                selectedCategory = entity.category ?? "Others"
             }
         }
     }
