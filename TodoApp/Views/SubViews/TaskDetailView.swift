@@ -89,11 +89,11 @@ struct TaskDetailView: View {
                         dismiss()
                     } label: {
                         Text("Save")
-                        
+                            .saveButtonStyle()
+
                         
                     }
-                    .saveButtonStyle()
-                    
+                                        
                     
                     
                 }

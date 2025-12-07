@@ -30,7 +30,21 @@ struct Constants {
 }
 
 
-extension Button {
+extension Text {
+    
+    func saveButtonStyle() -> some View {
+        self
+            .padding()
+            .frame(maxWidth: .infinity)
+            
+            .background(Color.red.opacity(0.83))
+            .foregroundColor(.white)
+            .cornerRadius(10)
+    }
+}
+
+
+extension HStack {
     func addButtonStyle() -> some View {
         self
             .foregroundStyle(.white)
@@ -40,14 +54,5 @@ extension Button {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color(.red.opacity(0.93)))
                             )
-    }
-    
-    func saveButtonStyle() -> some View {
-        self
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.red.opacity(0.83))
-            .foregroundColor(.white)
-            .cornerRadius(10)
     }
 }

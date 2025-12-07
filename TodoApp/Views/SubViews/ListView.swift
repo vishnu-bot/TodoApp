@@ -22,6 +22,7 @@ struct ListView: View {
                         }
                     
                     Text(entity.title ?? "No Title")
+                    //add modifier to make the text red if task is overdued
                     
                     NavigationLink(destination: TaskDetailView(entity: entity)) { }
                 }
@@ -36,6 +37,8 @@ struct ListView: View {
             .listStyle(.plain)
             
         }
+        .scrollContentBackground(.hidden)
+        .background(Color(.clear))
         
     }
 }

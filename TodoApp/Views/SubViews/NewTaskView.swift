@@ -86,10 +86,10 @@ struct NewTaskView: View {
                         dismiss()
                     } label: {
                         Text("Save")
-                        
+                            .saveButtonStyle()
                         
                     }
-                    .saveButtonStyle()
+                    
                     
                     
                     

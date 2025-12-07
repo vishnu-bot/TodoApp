@@ -28,6 +28,7 @@ class CoreDataViewModel: ObservableObject {
                 
         }
         fetchData()
+        updateDailyNotification()
         
     }
     
@@ -89,6 +90,7 @@ class CoreDataViewModel: ObservableObject {
         do{
             try container.viewContext.save()
             fetchData()
+            updateDailyNotification()
         } catch let error {
             print("Error saving data to Core Data: \(error)")
         }
@@ -106,5 +108,26 @@ class CoreDataViewModel: ObservableObject {
     func toggleUpdate(isCompleted: Bool, entity: TaskEntity){
         entity.isCompleted = isCompleted
         saveData()
+    }
+    
+    func updateDailyNotification() {
+        // Calculate tasks due on the next 5 AM.
+        
+        let calendar = Calendar.current
+        let now = Date()
+        var dateComponents = DateComponents()
+        dateComponents.hour = 5
+        dateComponents.minute = 0
+        
+        // Get the next 5 AM
+        guard let nextTriggerDate = calendar.nextDate(after: now, matching: dateComponents, matchingPolicy: .nextTime) else { return }
+        
+        // Count tasks due on that date
+        let count = savedEntities.filter { entity in
+            guard let due = entity.dueDate else { return false }
+            return calendar.isDate(due, inSameDayAs: nextTriggerDate) && entity.isCompleted == false
+        }.count
+        
+        NotificationManager.shared.scheduleDailySummary(count: count, hour: dateComponents.hour!, minute: dateComponents.minute!)
     }
 }

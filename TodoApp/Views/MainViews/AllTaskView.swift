@@ -25,16 +25,17 @@ struct AllTaskView: View {
                         Image(systemName: Constants.addButtonIcon)
                         Text(Constants.addTaskString)
                     }
+                    .addButtonStyle()
                     
                 }
-                .addButtonStyle()
+                
                 .padding(18)
                 
             }
             .sheet(isPresented: $isPresentingNewTask) {
                 NewTaskView()
             }
-            .navigationTitle(sortVM.selectedSortOption == .dueDate ? "Sorted by Due Date" : Constants.allTaskString)
+            .navigationTitle(sortVM.selectedSortOption == .dueDate ? "Sorted - Due Date" : Constants.allTaskString)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

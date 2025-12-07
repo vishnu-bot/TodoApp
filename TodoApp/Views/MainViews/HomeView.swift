@@ -21,10 +21,15 @@ struct HomeView: View {
                     HStack(spacing: 10){
                         Image(systemName: Constants.addButtonIcon)
                         Text(Constants.addTaskString)
+                            
                     }
+                    .addButtonStyle()
+                    
+                    
                     
                 }
-                .addButtonStyle()
+                
+                
                 .padding(18)
                 
             }
