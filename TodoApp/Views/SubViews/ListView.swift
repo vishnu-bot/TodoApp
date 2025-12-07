@@ -22,7 +22,7 @@ struct ListView: View {
                         }
                     
                     Text(entity.title ?? "No Title")
-                    //add modifier to make the text red if task is overdued
+                        .foregroundColor(entity.dueDate ?? Date() < Constants.todayDate && !entity.isCompleted ? .red : .primary)
                     
                     NavigationLink(destination: TaskDetailView(entity: entity)) { }
                 }

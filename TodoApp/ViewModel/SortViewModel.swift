@@ -23,7 +23,8 @@ class SortViewModel: ObservableObject {
         case .defaultOrder:
             return tasks
         case .dueDate:
-            return tasks.sorted { $0.dueDate ?? Date.now < $1.dueDate ?? Date.now}
+            return tasks.filter { ($0.dueDate ?? Date()) >= Constants.todayDate }
+                        .sorted { ($0.dueDate ?? Date()) < ($1.dueDate ?? Date()) }
         }
     }
     

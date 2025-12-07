@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct Constants {
-
+    
     
     static let allTaskString = "All Tasks"
     static let searchString = "Search"
@@ -27,6 +27,10 @@ struct Constants {
     static let dashboardIcon = "gauge.chart.leftthird.topthird.rightthird"
     
     static let addButtonIcon = "plus"
+    
+    static var todayDate = Calendar.current.startOfDay(for: Date())
+    
+    
 }
 
 

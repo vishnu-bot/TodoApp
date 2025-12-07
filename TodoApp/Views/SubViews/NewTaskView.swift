@@ -11,6 +11,7 @@ struct NewTaskView: View {
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: CoreDataViewModel
+    @FocusState private var isFocused: Bool
     @State private var newTask: String = ""
     @State private var description: String = ""
     @State private var dueDate: Date = Calendar.current.startOfDay(for: Date())
@@ -30,6 +31,8 @@ struct NewTaskView: View {
                             .padding()
                             .cornerRadius(8)
                             .background(Color(.secondarySystemBackground))
+                            .focused($isFocused)
+                        
                     }
                     
                     VStack(alignment: .leading){

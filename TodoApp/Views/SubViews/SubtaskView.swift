@@ -43,7 +43,8 @@ struct SubTaskView: View {
             
             HStack {
                 TextField("Add new subtask...", text: $newSubtaskTitle)
-                    .textFieldStyle(.roundedBorder)
+                    .cornerRadius(8)
+                    .background(Color(.secondarySystemBackground))
                     .focused($isFocused)
                     .submitLabel(.done)
                     .onSubmit {
