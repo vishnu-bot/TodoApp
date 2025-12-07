@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import CoreData
 
 struct TaskDetailView: View {
     @Environment(\.dismiss) var dismiss
@@ -20,6 +21,7 @@ struct TaskDetailView: View {
     @State private var isCompleted: Bool = false
     @State private var categories: [String] = [ "Work", "Personal","Others"]
     @State private var selectedCategory: String = "Others"
+    @State private var isShowingSubTasks = false
     
     var body: some View {
         NavigationStack{
@@ -99,7 +101,7 @@ struct TaskDetailView: View {
                 }
                 .padding()
             }
-            .navigationBarTitle("Edit Task")
+            .navigationBarTitle("Task Information")
         }
         .onAppear{
             if let entity = entity {
@@ -109,6 +111,31 @@ struct TaskDetailView: View {
                 selectedPriority = Int(entity.priorityRaw)
                 isCompleted = entity.isCompleted
                 selectedCategory = entity.category ?? "Others"
+            }
+        }
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if entity != nil {
+                    Button {
+                        isShowingSubTasks = true
+                    } label: {
+                        Text("Sub Task")
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $isShowingSubTasks) {
+            if let entity = entity {
+                NavigationStack {
+                    SubTaskView(parentTask: entity, context: viewModel.container.viewContext)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Button("Done") {
+                                    isShowingSubTasks = false
+                                }
+                            }
+                        }
+                }
             }
         }
     }

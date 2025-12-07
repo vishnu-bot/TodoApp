@@ -38,8 +38,7 @@ struct ListView: View {
             
         }
         .scrollContentBackground(.hidden)
-        .background(Color(.clear))
-        
+//        .background(Color.black.opacity(0.1))
     }
 }
 

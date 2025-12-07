@@ -5,7 +5,7 @@
 //  Created by Vishnu on 03/12/25.
 //
 
-import CoreData
+internal import CoreData
 import Foundation
 import Combine
 

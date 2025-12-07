@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreData
+internal import CoreData
 
 extension CoreDataViewModel {
     static var preview: CoreDataViewModel {
