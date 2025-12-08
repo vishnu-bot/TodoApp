@@ -32,7 +32,6 @@ TodoApp is a powerful and intuitive iOS task management application built with *
 *   **Language**: Swift 5
 *   **UI Framework**: SwiftUI
 *   **Database**: Core Data (MVVM Pattern)
-*   **Concurrency**: Combine & Async/Await
 
 ## Requirements
 *   iOS 26.0+
