@@ -35,8 +35,8 @@ TodoApp is a powerful and intuitive iOS task management application built with *
 *   **Concurrency**: Combine & Async/Await
 
 ## Requirements
-*   iOS 16.0+
-*   Xcode 14.0+
+*   iOS 26.0+
+*   Xcode 16.0+
 
 ## Installation
 1.  Clone the repository.
