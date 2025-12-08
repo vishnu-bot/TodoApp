@@ -1,39 +1,44 @@
 # TodoApp
 
-A powerful and intuitive Todo application built for iOS using SwiftUI and Core Data. Manage your daily tasks efficiently with categorization, real-time search, and visual insights.
+TodoApp is a powerful and intuitive iOS task management application built with **SwiftUI** and **Core Data**. It helps you stay organized by managing tasks, subtasks, priorities, and categories effectively.
 
 ## Features
 
-- **📝 Task Management**: Easily add, edit, and delete tasks. Mark them as complete with a simple tap.
-- **🗂️ Categories**: Organize your tasks into **Work**, **Personal**, and **Others** to keep your life structured.
-- **📅 Today's Focus**: The Home tab highlights tasks due today, helping you stay focused on what matters now.
-- **🔍 Advanced Search**: Find any task instantly with real-time search and filter by category.
-- **📊 Dashboard**: Get visual insights into your productivity with a dedicated dashboard showing completion rates and task breakdowns.
-- **Sort & Filter**: Sort your tasks by due date to prioritize deadlines.
-- **💾 Local Persistence**: All your data is stored securely on your device using Core Data.
+### 📝 Task Management
+*   **Create, Read, Update, Delete (CRUD)**: Full lifecycle management for your valid tasks.
+*   **Categories**: Organize tasks into Work, Personal, and Others.
+*   **Priorities**: Assign priority levels (1, 2, 3) to your tasks.
+*   **Due Dates**: Set deadlines and track overdue tasks (highlighted in red).
+
+### 🧩 Subtasks
+*   **Break it Down**: Add manageable subtasks to any main task.
+*   **Track Progress**: Check off subtasks as you complete them.
+
+### 🔍 Search & Sort
+*   **Smart Search**: Instantly find tasks by title or category.
+*   **Filtering**: Filter tasks by category (All, Work, Personal, Others).
+*   **Sorting**: Sort tasks by Due Date (hiding overdue tasks) or Default order.
+
+### 📊 Dashboard
+*   **Visual Overview**: Get a bird's-eye view of your productivity.
+*   **Statistics**: View completion rates, total tasks, and pending vs. completed breakdown.
+*   **Charts**: Visual bar charts representing your task status.
+
+### 🔔 Notifications
+*   **Daily Summary**: Get a daily reminder at 5:00 AM with the count of tasks due for the day.
+*   **Smart Updates**: Notifications automatically update as you add or complete tasks.
 
 ## Tech Stack
-
-- **Language**: Swift 5
-- **UI Framework**: SwiftUI
-- **Data Persistence**: Core Data
-- **Architecture**: MVVM (Model-View-ViewModel)
-- **Charts**: Swift Charts (for Dashboard visualizations)
-
-## Project Structure
-
-- **Views**: Contains all the UI components (HomeView, ListView, TaskDetailView, etc.).
-- **ViewModel**: Handles business logic and data manipulation (CoreDataViewModel, SearchViewModel, SortViewModel).
-- **Model**: Core Data entities and persistence logic.
-
-## Getting Started
-
-1.  Clone the repository.
-2.  Open `TodoApp.xcodeproj` in Xcode.
-3.  Build and run on the iOS Simulator or a physical device.
+*   **Language**: Swift 5
+*   **UI Framework**: SwiftUI
+*   **Database**: Core Data (MVVM Pattern)
+*   **Concurrency**: Combine & Async/Await
 
 ## Requirements
+*   iOS 16.0+
+*   Xcode 14.0+
 
-- iOS 26.0+
-- Xcode 16.0+
-
+## Installation
+1.  Clone the repository.
+2.  Open `TodoApp.xcodeproj` in Xcode.
+3.  Build and run on your simulator or device.
