@@ -16,6 +16,7 @@ struct SubTaskView: View {
     @State private var newSubtaskTitle: String = ""
     @FocusState private var isFocused: Bool
     
+    // Initialising the variables
     init(parentTask: TaskEntity, context: NSManagedObjectContext) {
         self.parentTask = parentTask
         _viewModel = StateObject(wrappedValue: SubtaskViewModel(context: context))
@@ -25,8 +26,9 @@ struct SubTaskView: View {
         VStack {
             List {
                 ForEach(viewModel.subtasks as [SubtaskEntity], id: \.objectID) { subtask in
+                    // Displays the subtasks of each Parent task
                     HStack {
-                        Image(systemName: (subtask.isCompleted ? "checkmark.circle.fill" : "circle"))
+                        Image(systemName: (subtask.isCompleted ? Constants.checkedIcon : Constants.uncheckedIcon))
                             .foregroundColor(subtask.isCompleted ? .red : .gray)
                             .onTapGesture {
                                 viewModel.toggleSubtask(subtask: subtask, parentTask: parentTask)
@@ -41,9 +43,11 @@ struct SubTaskView: View {
             }
             .listStyle(.plain)
             
+            // To add a new sutask
             HStack {
-                TextField("Add new subtask...", text: $newSubtaskTitle)
-                    .cornerRadius(8)
+                TextField(Constants.addSubTaskString, text: $newSubtaskTitle)
+                    .padding(5)
+                    .cornerRadius(20)
                     .background(Color(.secondarySystemBackground))
                     .focused($isFocused)
                     .submitLabel(.done)
@@ -54,7 +58,7 @@ struct SubTaskView: View {
                 Button {
                     addSubtask()
                 } label: {
-                    Image(systemName: "plus.circle.fill")
+                    Image(systemName: Constants.addSubTaskIcon)
                         .font(.title2)
                 }
                 .disabled(newSubtaskTitle.isEmpty)
@@ -62,12 +66,13 @@ struct SubTaskView: View {
             .padding()
             .background(Color(.systemBackground))
         }
-        .navigationTitle("Subtasks")
+        .navigationTitle(Constants.subTaskString)
         .onAppear {
             viewModel.fetchSubtasks(for: parentTask)
         }
     }
     
+    // Internal function to add subtask
     private func addSubtask() {
         guard !newSubtaskTitle.isEmpty else { return }
         viewModel.addNewSubtask(title: newSubtaskTitle, parentTask: parentTask)

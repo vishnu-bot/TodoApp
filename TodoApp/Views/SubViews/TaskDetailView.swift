@@ -19,44 +19,44 @@ struct TaskDetailView: View {
     @State private var priorities: [Int] = [1, 2, 3]
     @State private var selectedPriority: Int = 3
     @State private var isCompleted: Bool = false
-    @State private var categories: [String] = [ "Work", "Personal","Others"]
-    @State private var selectedCategory: String = "Others"
+    @State private var categories: [String] = [ Constants.workCategoryString,  Constants.personalCategoryString,Constants.othersCategoryString]
+    @State private var selectedCategory: String = Constants.workCategoryString
     @State private var isShowingSubTasks = false
     
     var body: some View {
         NavigationStack{
             ScrollView {
                 LazyVStack(spacing:35){
+                    
+                    // Displays the title of the task and allows us to update
                     VStack(alignment: .leading){
-                        Text("Task")
-                            .font(.subheadline)
-                        TextField("New Task", text: $title)
-                            .padding()
-                            .cornerRadius(8)
-                            .background(Color(.secondarySystemBackground))
+                        Text(Constants.taskTitleString)
+                            .bold()
+                        TextField(Constants.newTaskTitleString, text: $title)
+                            .taskTextFieldStyle()
                     }
                     
+                    // Displays the desciption of the task and allows us to update
                     VStack(alignment: .leading){
-                        Text("Description")
-                            .font(.subheadline)
+                        Text(Constants.taskDescriptionString)
+                            .bold()
                         TextEditor(text: $description)
-                            .frame(minHeight: 120)
-                            .padding(8)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(8)
+                            .textEditorStyle()
                     }
                     
-                    Toggle("Task Completed", isOn:$isCompleted)
+                    // to update the completion status of the project
+                    Toggle(Constants.taskToggleString, isOn:$isCompleted)
                         .onChange(of: isCompleted) { _ in
                             viewModel.toggleUpdate(isCompleted: isCompleted, entity: entity!)
                         }
                     
-                    DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
+                    // Date Picker for updating task info
+                    DatePicker(Constants.taskDueDateString, selection: $dueDate, displayedComponents: .date)
                     
-                    
+                    // Priority Selector
                     HStack{
                         
-                        Text("Task Priority")
+                        Text(Constants.taskPriorityString)
                         Spacer()
                         Picker("Priority", selection: $selectedPriority) {
                             ForEach(priorities, id: \.self) { priority in
@@ -66,8 +66,9 @@ struct TaskDetailView: View {
                         .pickerStyle(.menu)
                     }
                     
+                    // Category Selector
                     VStack(alignment: .leading){
-                        Text("Task Category")
+                        Text(Constants.taskCategoryString)
                             .padding(.horizontal,2.5)
                         HStack{
                             Picker("Category", selection: $selectedCategory) {
@@ -90,7 +91,7 @@ struct TaskDetailView: View {
 //                        }
                         dismiss()
                     } label: {
-                        Text("Save")
+                        Text(Constants.saveButtonString)
                             .saveButtonStyle()
 
                         
@@ -101,16 +102,17 @@ struct TaskDetailView: View {
                 }
                 .padding()
             }
-            .navigationBarTitle("Task Information")
+            .navigationBarTitle(Constants.editTaskTitle)
+            .navigationSubtitle(Constants.editTaskSubtitle)
         }
-        .onAppear{
+        .onAppear{ // responsible for the data to appear at its respective places
             if let entity = entity {
                 title = entity.title ?? ""
                 description = entity.notes ?? ""
                 dueDate = entity.dueDate ?? Date()
                 selectedPriority = Int(entity.priorityRaw)
                 isCompleted = entity.isCompleted
-                selectedCategory = entity.category ?? "Others"
+                selectedCategory = entity.category ?? Constants.othersCategoryString
             }
         }
         .toolbar{
@@ -119,7 +121,7 @@ struct TaskDetailView: View {
                     Button {
                         isShowingSubTasks = true
                     } label: {
-                        Text("Sub Task")
+                        Text(Constants.subTaskString)
                     }
                 }
             }
@@ -130,7 +132,7 @@ struct TaskDetailView: View {
                     SubTaskView(parentTask: entity, context: viewModel.container.viewContext)
                         .toolbar {
                             ToolbarItem(placement: .navigationBarLeading) {
-                                Button("Done") {
+                                Button(Constants.doneButtonString) {
                                     isShowingSubTasks = false
                                 }
                             }

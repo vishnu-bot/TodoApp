@@ -17,43 +17,42 @@ struct NewTaskView: View {
     @State private var dueDate: Date = Calendar.current.startOfDay(for: Date())
     @State private var priorities: [Int] = [1, 2, 3]
     @State private var selectedPriority: Int = 3
-    @State private var categories: [String] = [ "Work", "Personal","Others" ]
-    @State private var selectedCategory: String = "Others"
+    @State private var categories: [String] = [ Constants.workCategoryString, Constants.personalCategoryString,Constants.othersCategoryString]
+    @State private var selectedCategory: String = Constants.othersCategoryString
     
     var body: some View {
         NavigationStack{
             ScrollView {
                 LazyVStack(spacing:35){
+                    // Task Name input field
                     VStack(alignment: .leading){
-                        Text("Task")
+                    
+                        Text(Constants.taskTitleString)
                             .bold()
-                        TextField("New Task", text: $newTask)
-                            .padding()
-                            .cornerRadius(8)
-                            .background(Color(.secondarySystemBackground))
-                            .focused($isFocused)
+                        
+                        TextField(Constants.taskTitleTextFeildPlaceholder, text: $newTask)
+                            .taskTextFieldStyle()
                         
                     }
                     
+                    // Task Description input field
                     VStack(alignment: .leading){
-                        Text("Decription")
+                        
+                        Text(Constants.taskDescriptionString)
                             .bold()
+                        
                         TextEditor(text: $description)
-                            .frame(minHeight: 120)
-                            .padding(8)
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(8)
-                            .scrollDisabled(false)
+                            .textEditorStyle()
                     }
                     
-                    
-                    DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
+                    // Due Date picker
+                    DatePicker(Constants.taskDueDateString, selection: $dueDate, displayedComponents: .date)
                         .bold()
                         
-                    
+                    // Priority picker
                     HStack{
                         
-                        Text("Task Priority")
+                        Text(Constants.taskPriorityString)
                             .bold()
                         Spacer()
                         Picker("Priority", selection: $selectedPriority) {
@@ -64,9 +63,9 @@ struct NewTaskView: View {
                         .pickerStyle(.menu)
                     }
                     
-                    
+                    // Task Category Picker
                     VStack(alignment: .leading){
-                        Text("Task Category")
+                        Text(Constants.taskCategoryString)
                             .bold()
                             .padding(.horizontal,2.5)
                         HStack{
@@ -79,16 +78,13 @@ struct NewTaskView: View {
                         }
                     }
                     
-                    
+                    // Save Button
                     Button{
                         guard !newTask.isEmpty else { return }
                         viewModel.addTaskData(title: newTask, notes: description, dueDate: dueDate, isCompleted: false, priority: Int16(selectedPriority),category: selectedCategory)
-//                        viewModel.saveData()
-                        newTask = ""
-                        description = ""
                         dismiss()
                     } label: {
-                        Text("Save")
+                        Text(Constants.saveButtonString)
                             .saveButtonStyle()
                         
                     }
@@ -99,7 +95,7 @@ struct NewTaskView: View {
                 }
                 .padding()
             }
-            .navigationBarTitle("Add New Task")
+            .navigationBarTitle(Constants.newTaskTitleString)
         }
         
     }

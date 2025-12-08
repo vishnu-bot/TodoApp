@@ -14,14 +14,13 @@ class SubtaskViewModel: ObservableObject {
     let context: NSManagedObjectContext
     @Published var subtasks: [SubtaskEntity] = []
     
+    // Establishes a connection to the Core Data context
     init(context: NSManagedObjectContext) {
         self.context = context
     }
     
+    // This function is responsible for fetching the subtasks for a specific task (i.e. from its parent task)
     func fetchSubtasks(for task: TaskEntity) {
-        // Since we have a relationship, we can just use that, but for a sorted list we might want to sort the set.
-        // Or we can fetch from context with a predicate.
-        // Let's use the relationship for simplicity if possible, but a fetch request is often safer for updates.
         let request: NSFetchRequest<SubtaskEntity> = SubtaskEntity.fetchRequest()
         request.predicate = NSPredicate(format: "parentTask == %@", task)
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
@@ -33,6 +32,7 @@ class SubtaskViewModel: ObservableObject {
         }
     }
     
+    // This function is responsible for adding a new subtask to the database
     func addNewSubtask(title: String, parentTask: TaskEntity) {
         let newSubtask = SubtaskEntity(context: context)
         newSubtask.subtaskID = UUID()
@@ -44,9 +44,11 @@ class SubtaskViewModel: ObservableObject {
         fetchSubtasks(for: parentTask)
     }
     
+    // This function is responsible for toggling the completion status of a subtask
     func toggleSubtask(subtask: SubtaskEntity, parentTask: TaskEntity) {
         subtask.isCompleted.toggle()
         saveData()
+        // Fetches the updated subtasks for the parent task
         fetchSubtasks(for: parentTask)
     }
     
@@ -56,6 +58,7 @@ class SubtaskViewModel: ObservableObject {
 //        fetchSubtasks(for: parentTask)
 //    }
     
+    // This function is responsible for deleting a subtask from the database
     func deleteSubtask(at offsets: IndexSet, parentTask: TaskEntity) {
         for index in offsets {
             let subtask = subtasks[index]
@@ -65,6 +68,7 @@ class SubtaskViewModel: ObservableObject {
         fetchSubtasks(for: parentTask)
     }
     
+    // This function is responsible for saving the subtask data to the database
     func saveData() {
         do {
             try context.save()

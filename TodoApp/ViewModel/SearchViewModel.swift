@@ -24,6 +24,9 @@ class SearchViewModel: ObservableObject {
         case others = "Others"
     }
 
+    // This function Filters tasks based on categories, and searches for specify task.
+    // It can also search tasks within a filtered category.
+    // Working is displayed in SearchView (the Search page in the app)
     func filteredTasks(category: String) -> [TaskEntity] {
         coreData.fetchData()
         if(category == "Others"){
@@ -48,7 +51,7 @@ class SearchViewModel: ObservableObject {
                 return coreData.savedEntities.filter { $0.category == "Personal" && ($0.title ?? "").localizedCaseInsensitiveContains(searchText) }
             }
         }
-        
+        coreData.fetchData()
         if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return coreData.savedEntities
         } else {

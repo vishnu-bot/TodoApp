@@ -14,7 +14,11 @@ struct HomeView: View {
     var body: some View {
         NavigationStack{
             ZStack(alignment: .bottomTrailing) {
+                
+                // Gets a List of tasks Dued for the day
                 ListView(item: viewModel.todayItems)
+                
+                // Button fo adding new Task
                 Button{
                     isPresentingNewTask = true
                 } label:{
@@ -24,12 +28,7 @@ struct HomeView: View {
                             
                     }
                     .addButtonStyle()
-                    
-                    
-                    
                 }
-                
-                
                 .padding(18)
                 
             }

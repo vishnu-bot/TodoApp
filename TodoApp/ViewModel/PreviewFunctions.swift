@@ -8,6 +8,7 @@
 import Foundation
 internal import CoreData
 
+// This file contains a pre-defined data to be used to preview the UI screen during build
 extension CoreDataViewModel {
     static var preview: CoreDataViewModel {
         let vm = CoreDataViewModel(inMemory: true)

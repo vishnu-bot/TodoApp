@@ -11,6 +11,7 @@ import Charts
 struct DashboardView: View {
     @EnvironmentObject var viewModel: CoreDataViewModel
     
+    // Initialising the required variables
     var completedCount: Int {
         viewModel.savedEntities.filter { $0.isCompleted }.count
     }
@@ -58,7 +59,8 @@ struct DashboardView: View {
                     .cornerRadius(12)
                     .padding(.horizontal)
                     
-                    // Category Breakdown (Placeholder for now as we just added categories)
+                    // Task completion Breakdown
+                    // Provides the Chart for the tasks, completed and pending
                     if #available(iOS 16.0, *) {
                         VStack(alignment: .leading) {
                             Text("Tasks by Status")
@@ -95,6 +97,7 @@ struct DashboardView: View {
     }
 }
 
+// SummaryCard struct to display the summary of the tasks
 struct SummaryCard: View {
     let title: String
     let count: Int

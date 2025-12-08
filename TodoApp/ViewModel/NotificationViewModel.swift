@@ -11,6 +11,7 @@ import UserNotifications
 class NotificationManager {
     static let shared = NotificationManager()
 
+    // Permisson request for notification from user
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if let error = error {
@@ -19,6 +20,7 @@ class NotificationManager {
         }
     }
     
+    // Scheduling a one - time notification for a specific date and time
     func scheduleNotification(title: String, body: String, date: Date) {
         let content = UNMutableNotificationContent()
         content.title = title
@@ -32,15 +34,18 @@ class NotificationManager {
         UNUserNotificationCenter.current().add(request)
     }
     
+
+    // Scheldule a daily recurring notification system
     func scheduleDailySummary(count: Int, hour: Int, minute: Int) {
-        // Remove existing daily summary
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["daily_summary"])
         
+        // Says what should be in the Notification
         let content = UNMutableNotificationContent()
         content.title = "Daily Task Summary"
         content.body = "You have \(count) tasks scheduled for today."
         content.sound = .default
         
+        // Time - Hour and minutes of when the notification should occur, values are taken from function call
         var dateComponents = DateComponents()
         dateComponents.hour = hour
         dateComponents.minute = minute

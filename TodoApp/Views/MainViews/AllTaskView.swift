@@ -15,9 +15,10 @@ struct AllTaskView: View {
     var body: some View {
         NavigationStack{
             ZStack(alignment: .bottomTrailing) {
+                // Returns the List of all tasks
                 ListView(item: sortVM.sortTasks(viewModel.savedEntities))
                 
-                
+                // Button to Add new task.
                 Button{
                     isPresentingNewTask = true
                 } label:{
@@ -26,22 +27,23 @@ struct AllTaskView: View {
                         Text(Constants.addTaskString)
                     }
                     .addButtonStyle()
-                    
                 }
-                
                 .padding(18)
                 
+                
             }
+            // Opens a new sub page for the NewTaskView()
             .sheet(isPresented: $isPresentingNewTask) {
                 NewTaskView()
             }
-            .navigationTitle(sortVM.selectedSortOption == .dueDate ? "Sorted - Due Date" : Constants.allTaskString)
+            .navigationTitle(sortVM.selectedSortOption == .dueDate ? Constants.preSortedTitle : Constants.allTaskString)
+            // Button to enable sort Functionality
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         sortVM.toggleSort()
                     } label: {
-                        Label("Sort", systemImage: sortVM.selectedSortOption == .dueDate ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
+                        Label("Sort", systemImage: sortVM.selectedSortOption == .dueDate ? Constants.preSortIcon : Constants.postSortIcon)
                     }
                 }
             }

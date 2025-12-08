@@ -14,11 +14,13 @@ class CoreDataViewModel: ObservableObject {
     let container: NSPersistentContainer
     @Published var savedEntities: [TaskEntity] = []
     
+    // Initializes the Core Data stack and loads the data from the database
     init(inMemory: Bool = false){
         container = NSPersistentContainer(name: "TodoContainer")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
+        // Loads the data from the database
         container.loadPersistentStores { (description, error) in
             if let error = error {
                 print("There was a problem loading the date from CORE DATA: \(error)")
@@ -27,13 +29,15 @@ class CoreDataViewModel: ObservableObject {
             }
                 
         }
+        // Fetches the data from the database
         fetchData()
+        // Updates the daily notification
         updateDailyNotification()
         
     }
     
 
-    // Refreshs or gets the stored data from CORE DATA
+    // Refreshes or gets the loads data from CORE DATA
     func fetchData(){
         let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
         do{
@@ -58,6 +62,7 @@ class CoreDataViewModel: ObservableObject {
         saveData()
     }
     
+    // Updates the tasks to DB on every edit and modification (used in TaskDetailView)
     func updateTaskData(title: String, notes: String?, dueDate: Date, isCompleted: Bool, priority: Int16, category: String,entity: TaskEntity){
         entity.title = title
         entity.notes = notes ?? entity.notes
@@ -77,7 +82,7 @@ class CoreDataViewModel: ObservableObject {
         saveData()
     }
     
-    // function to delete from DB (Deprecated: Use deleteTask instead)
+    // function to delete from DB using swipe action
     func deleteData(indexSet: IndexSet){
         guard let index = indexSet.first else {return}
         let entity = savedEntities[index]
@@ -110,6 +115,8 @@ class CoreDataViewModel: ObservableObject {
         saveData()
     }
     
+    
+    // Refresh the Notification Reminders
     func updateDailyNotification() {
         // Calculate tasks due on the next 5 AM.
         

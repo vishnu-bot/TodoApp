@@ -9,11 +9,13 @@ import SwiftUI
 
 struct SearchView: View {
     @StateObject private var searchVM = SearchViewModel()
-    @State private var categories: [String] = ["All", "Work", "Personal", "Others"]
+    // Items for the Picker below the search bar.
+    @State private var categories: [String] = ["All", Constants.workCategoryString, Constants.personalCategoryString, Constants.othersCategoryString]
     @State private var category: String = "All"
     var body: some View {
         NavigationStack {
             
+            // Picker with different Categories ("All tasks", "Work related tasks", "Personal Tasks", "Other task Categories") to choose from.
             VStack{
                 Picker("Category", selection: $category) {
                     ForEach(categories, id: \.self) { cat in
@@ -22,13 +24,13 @@ struct SearchView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
-//                .background(Color(.secondarySystemBackground))
+
                 
             }
-            
+        // Gets the all tasks depending on the categories chose or searched task or combination of both
             ListView(item: searchVM.filteredTasks(category: category))
                 .searchable(text: $searchVM.searchText, prompt: "Search tasks")
-                .navigationTitle("Search")
+                .navigationTitle(Constants.searchString)
 
         }
     }
